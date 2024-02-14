@@ -8,8 +8,8 @@ The primary objective of the dashboard is to visualize the most popular times fo
 Research Questions:    
 The dashboard addresses three critical research questions:     
 
-**Peak Usage Times:** Identifying the most popular timeframes during the day and year for bike shares, anticipating commuting peaks and seasonal trends.    
-**Duration Analysis:** Investigating the duration of trips based on ride type (electric/classic) to determine user preferences.     
-**Station Popularity:** Analyzing the popularity of stations for both starting and ending bike shares, facilitating inventory management and relocation strategies to meet demand effectively.        
+1. **Peak Usage Times:** Identifying the most popular timeframes during the day and year for bike shares, anticipating commuting peaks and seasonal trends.    
+2. **Duration Analysis:** Investigating the duration of trips based on ride type (electric/classic) to determine user preferences.     
+3. **Station Popularity:** Analyzing the popularity of stations for both starting and ending bike shares, facilitating inventory management and relocation strategies to meet demand effectively.        
 
 The Bike Sharing Dashboard serves as a valuable tool for the Bike Sharing Organization to make data-driven decisions, optimize inventory management, and enhance user experience in the dynamic and competitive bike-sharing industry. Finally, a sketch of the proposed dashboard can be seen in the images below. 
