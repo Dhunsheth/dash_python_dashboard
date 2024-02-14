@@ -1,8 +1,6 @@
-<center>
 # Bike Share Dashboard    
      
 By: Tim Pulfer, Jacob Rosen, Dhun Sheth   
-</center>
 
 ### Section 1: Motivation and Purpose    
 
