@@ -34,6 +34,14 @@ data['ride_duration'] = round((data['ended_at'] - data['started_at']).dt.total_s
 data['ride_distance'] = data.apply(calculate_distance, axis=1) # in meters
 data.drop(data[data['ride_duration'] < 0].index, inplace=True)
 
+
+
+# FILTERING DATA DUE TO MEMORY LIMITS
+data = data[(data['started_at'] > '2023-01-01 00:00:00') & (data['started_at'] < '2023-04-30 00:00:00')]
+
+
+
+
 # Write to Parquet
 data.to_parquet('../data/processed/data.parquet', index=False)
 
