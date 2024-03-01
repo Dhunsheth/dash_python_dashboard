@@ -73,5 +73,10 @@ map_stations_df['count'] = map_stations_df['start_count'] + map_stations_df['end
 
 map_stations_df.to_parquet('../data/processed/geo_map_stations.parquet', index=False)
 
-# top_locations = df[df['start_station_name'].isin(top_stations.index)].drop_duplicates('start_station_name')[['start_station_name', 'start_lat', 'start_lng']]
+## Data frame for rider trend graphs
+rider_trend = data.groupby([pd.Grouper(key='started_at', freq='D'), pd.Grouper(key='started_at', freq='H'), 'rideable_type']).agg({'started_at': 'count', 'ride_duration':'mean'})
+rider_trend.rename(columns={'started_at': 'count'}, inplace=True)
+rider_trend.index = rider_trend.index.set_names('day', level=0)
+rider_trend.index = rider_trend.index.set_names('time', level=1)
+rider_trend.to_parquet('../data/processed/rider_trend_df.parquet')
 
