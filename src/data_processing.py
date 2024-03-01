@@ -38,36 +38,6 @@ data.drop(data[data['ride_duration'] < 0].index, inplace=True)
 data.to_parquet('../data/processed/data.parquet', index=False)
 
 ## Data frame for Geo-Map of bike station locations
-
-# map_stations_df = data['start_station_name'].value_counts()
-# map_stations_df = map_stations_df.reset_index()
-# map_stations_df.columns = ['station_name', 'start_count']
-# map_stations_df = map_stations_df.merge(data, left_on='station_name', right_on='start_station_name', how='left')
-# map_stations_df.drop(['ride_id', 'rideable_type', 'started_at',
-#        'ended_at', 'start_station_name', 'start_station_id',
-#        'end_station_name', 'end_station_id', 'end_lat', 'end_lng', 'member_casual', 'ride_duration',
-#        'ride_distance'], axis=1, inplace=True)
-# map_stations_df.drop_duplicates(subset=['station_name'], keep='first', inplace=True)
-
-# end_stations_df = data['end_station_name'].value_counts()
-# end_stations_df = end_stations_df.reset_index()
-# end_stations_df.columns = ['station_name', 'end_count']
-# end_stations_df = end_stations_df.merge(data, left_on='station_name', right_on='end_station_name', how='left')
-# end_stations_df.drop(['ride_id', 'rideable_type', 'started_at',
-#        'ended_at', 'start_station_name', 'start_station_id',
-#        'end_station_name', 'end_station_id', 'start_lat', 'start_lng', 'member_casual', 'ride_duration',
-#        'ride_distance'], axis=1, inplace=True)
-# end_stations_df.drop_duplicates(subset=['station_name'], keep='first', inplace=True)
-
-# map_stations_df = map_stations_df.merge(end_stations_df, how='outer').fillna(0)
-
-# map_stations_df.drop(columns=['end_lat', 'end_lng'], inplace=True)
-# map_stations_df.rename(columns={'start_lng': 'lng', 'start_lat':'lat'}, inplace=True)
-# map_stations_df['count'] = map_stations_df['start_count'] + map_stations_df['end_count']
-
-# map_stations_df.to_parquet('../data/processed/geo_map_stations.parquet', index=False)
-
-################
 geo_df = data
 geo_df['start_lng'] = data.groupby('start_station_name')['start_lng'].transform('mean')
 geo_df['start_lat'] = data.groupby('start_station_name')['start_lat'].transform('mean')
@@ -103,21 +73,6 @@ station_map_counts['end_count'] = station_map_counts['end_count'].astype(int)
 station_map_counts['count'] = station_map_counts['start_count'] + station_map_counts['end_count']
 station_map_counts.sort_index(inplace=True)
 station_map_counts.to_parquet('../data/processed/geo_station_map_df.parquet')
-
-################
-
-# Points data frame for map
-# map_stations_sorted_df = map_stations_df.sort_values(by='count', ascending=False)
-
-# num_station_to_show = len(map_stations_sorted_df['lat'].values)
-
-# points = [
-#     (row['lat'], row['lng'], row['station_name'], row['count']) 
-#     for index, row in islice(map_stations_sorted_df.iterrows(), num_station_to_show)
-# ]
-
-# points_df = pd.DataFrame(points, columns=['lat', 'lng', 'station_name', 'count'])
-# points_df.to_parquet('../data/processed/points_df.parquet', index=False)
 
 
 ## Data frame for rider trend graphs

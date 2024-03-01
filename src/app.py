@@ -34,27 +34,7 @@ data = pd.read_parquet('../data/processed/data.parquet')
 rider_trend_df = pd.read_parquet('../data/processed/rider_trend_df.parquet')
 heat_map_df = pd.read_parquet('../data/processed/heat_map_df.parquet')
 geo_station_map_df = pd.read_parquet('../data/processed/geo_station_map_df.parquet')
-#points_df = pd.read_parquet('../data/processed/points_df.parquet')
 
-# num_station_to_show = 10
-
-# points = [
-#     (row['lat'], row['lng'], row['station_name'], row['count']) 
-#     for index, row in islice(map_stations_df.iterrows(), num_station_to_show)
-# ]
-
-# map_chicago = folium.Map(location=[41.8781, -87.6298], zoom_start=12)
-
-# for point in points:
-#     tooltip_text = f"Rank: {map_stations_df[map_stations_df['station_name'] == point[2]].index[0] + 1} - {point[2]}"  # Rank and station name
-#     folium.Marker(
-#         location=[point[0], point[1]],
-#         tooltip=tooltip_text
-#     ).add_to(map_chicago)
-
-# map_chicago
-# map_chicago.save('map_chicago.html')
-# IFrame(src='map_chicago.html', width=800, height=600)
 
 start_date_min = str(data['started_at'].min())
 end_date_max = str(data['ended_at'].max())
