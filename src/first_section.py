@@ -4,6 +4,7 @@ import dash_bootstrap_components as dbc
 import altair as alt
 import pandas as pd
 import vegafusion
+from itertools import islice
 
 def get_first_section(start_date_min, end_date_max):
     return [

@@ -19,6 +19,8 @@ from first_section import get_first_section
 from first_section import plot_rider_trend
 from second_section_heatmap import get_heatmap
 from second_section_heatmap import plot_heatmap
+from third_section_map import get_third_section_map
+from third_section_map import get_map
 
 # changing current directory to directory of app.py file
 file_path = 'app.py'
@@ -29,30 +31,30 @@ os.chdir(directory_path)
 
 # Load data frames from parquet
 data = pd.read_parquet('../data/processed/data.parquet')
-map_stations_df = pd.read_parquet('../data/processed/geo_map_stations.parquet')
 rider_trend_df = pd.read_parquet('../data/processed/rider_trend_df.parquet')
 heat_map_df = pd.read_parquet('../data/processed/heat_map_df.parquet')
+geo_station_map_df = pd.read_parquet('../data/processed/geo_station_map_df.parquet')
+#points_df = pd.read_parquet('../data/processed/points_df.parquet')
 
+# num_station_to_show = 10
 
-num_station_to_show = 10
+# points = [
+#     (row['lat'], row['lng'], row['station_name'], row['count']) 
+#     for index, row in islice(map_stations_df.iterrows(), num_station_to_show)
+# ]
 
-points = [
-    (row['lat'], row['lng'], row['station_name'], row['count']) 
-    for index, row in islice(map_stations_df.iterrows(), num_station_to_show)
-]
+# map_chicago = folium.Map(location=[41.8781, -87.6298], zoom_start=12)
 
-map_chicago = folium.Map(location=[41.8781, -87.6298], zoom_start=12)
+# for point in points:
+#     tooltip_text = f"Rank: {map_stations_df[map_stations_df['station_name'] == point[2]].index[0] + 1} - {point[2]}"  # Rank and station name
+#     folium.Marker(
+#         location=[point[0], point[1]],
+#         tooltip=tooltip_text
+#     ).add_to(map_chicago)
 
-for point in points:
-    tooltip_text = f"Rank: {map_stations_df[map_stations_df['station_name'] == point[2]].index[0] + 1} - {point[2]}"  # Rank and station name
-    folium.Marker(
-        location=[point[0], point[1]],
-        tooltip=tooltip_text
-    ).add_to(map_chicago)
-
-map_chicago
-map_chicago.save('map_chicago.html')
-IFrame(src='map_chicago.html', width=800, height=600)
+# map_chicago
+# map_chicago.save('map_chicago.html')
+# IFrame(src='map_chicago.html', width=800, height=600)
 
 start_date_min = str(data['started_at'].min())
 end_date_max = str(data['ended_at'].max())
@@ -70,7 +72,13 @@ app.layout = html.Div([
             get_heatmap(data),
             className="mb-4"
         
+        ),
+    dbc.Container(
+            get_third_section_map(),
+            className="mb-4"
+        
         )
+    
 ])
 @app.callback(
     Output('rider-trend-bar', 'srcDoc'),
@@ -94,7 +102,18 @@ def plot_rider_analysis(func, cat, start_date, end_date):
 def plot_station_analysis(stations, heat_type, start_date, end_date):
     p = plot_heatmap(heat_map_df, stations, heat_type, start_date, end_date)
     return p
-    
+
+@app.callback(
+    Output('map-iframe', 'srcDoc'),
+    [Input('num-stations', 'value'),
+     Input('date-picker-range', 'start_date'),
+      Input('date-picker-range', 'end_date')]
+)
+
+def plot_map(num_stations, start_date, end_date):
+    p = get_map(num_stations, geo_station_map_df, start_date, end_date)
+    return p
+
 if __name__ == '__main__':
     app.run_server(debug=True)
 
