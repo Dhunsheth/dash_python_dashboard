@@ -37,11 +37,11 @@ data.drop(data[data['ride_duration'] < 0].index, inplace=True)
 data.to_parquet('../data/processed/data.parquet', index=False)
 
 ## Data frame for Geo-Map of bike station locations
-start_stations = data['start_station_name'].dropna().unique()
-end_stations = data['end_station_name'].dropna().unique()
-unique_stations = np.concatenate((start_stations, end_stations))
-unique_stations = np.unique(unique_stations)
-number_of_stations = len(unique_stations) # Number of bike stations we want to show.
+# start_stations = data['start_station_name'].dropna().unique()
+# end_stations = data['end_station_name'].dropna().unique()
+# unique_stations = np.concatenate((start_stations, end_stations))
+# unique_stations = np.unique(unique_stations)
+# number_of_stations = len(unique_stations) # Number of bike stations we want to show.
 
 
 map_stations_df = data['start_station_name'].value_counts()
@@ -80,3 +80,28 @@ rider_trend.index = rider_trend.index.set_names('day', level=0)
 rider_trend.index = rider_trend.index.set_names('time', level=1)
 rider_trend.to_parquet('../data/processed/rider_trend_df.parquet')
 
+
+## Data frame for heatmap
+heat_map_start = data.groupby([pd.Grouper(key='started_at', freq='D'), pd.Grouper(key='started_at', freq='H'), 'start_station_name']).agg({'started_at': 'count'})
+heat_map_start.rename(columns={'started_at': 'start_count'}, inplace=True)
+heat_map_start.index = heat_map_start.index.set_names('day', level=0)
+heat_map_start.index = heat_map_start.index.set_names('time', level=1)
+heat_map_start.index = heat_map_start.index.set_names('station_name', level=2)
+
+heat_map_end = data.groupby([pd.Grouper(key='ended_at', freq='D'), pd.Grouper(key='ended_at', freq='H'), 'end_station_name']).agg({'ended_at': 'count'})
+heat_map_end.rename(columns={'ended_at': 'end_count'}, inplace=True)
+heat_map_end.index = heat_map_end.index.set_names('day', level=0)
+heat_map_end.index = heat_map_end.index.set_names('time', level=1)
+heat_map_end.index = heat_map_end.index.set_names('station_name', level=2)
+
+heat_map = pd.merge(heat_map_start, heat_map_end, left_on=heat_map_start.index, right_on=heat_map_end.index, how='outer')
+
+heat_map[['day', 'time', 'station_name']] = pd.DataFrame(heat_map['key_0'].tolist(), index=heat_map.index)
+heat_map.drop(columns=['key_0'], inplace=True)
+heat_map = heat_map.set_index(['day', 'time', 'station_name'])
+heat_map = heat_map.fillna(0)
+heat_map['start_count'] = heat_map['start_count'].astype(int)
+heat_map['end_count'] = heat_map['end_count'].astype(int)
+heat_map['net'] = heat_map['end_count'] - heat_map['start_count']
+heat_map.sort_index(inplace=True)
+heat_map.to_parquet('../data/processed/heat_map_df.parquet')

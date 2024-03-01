@@ -17,6 +17,8 @@ from itertools import islice
 
 from first_section import get_first_section
 from first_section import plot_rider_trend
+from second_section_heatmap import get_heatmap
+from second_section_heatmap import plot_heatmap
 
 # changing current directory to directory of app.py file
 file_path = 'app.py'
@@ -29,6 +31,7 @@ os.chdir(directory_path)
 data = pd.read_parquet('../data/processed/data.parquet')
 map_stations_df = pd.read_parquet('../data/processed/geo_map_stations.parquet')
 rider_trend_df = pd.read_parquet('../data/processed/rider_trend_df.parquet')
+heat_map_df = pd.read_parquet('../data/processed/heat_map_df.parquet')
 
 
 num_station_to_show = 10
@@ -58,12 +61,17 @@ alt.data_transformers.enable('vegafusion')
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.MINTY])
 
-app.layout = html.Div(
+app.layout = html.Div([
     dbc.Container(
             get_first_section(start_date_min, end_date_max),
             className="mb-4"
+        ),
+    dbc.Container(
+            get_heatmap(data),
+            className="mb-4"
+        
         )
-)
+])
 @app.callback(
     Output('rider-trend-bar', 'srcDoc'),
     [Input('rider-trend-radio', 'value'),
@@ -71,14 +79,22 @@ app.layout = html.Div(
     Input('date-picker-range', 'start_date'),
      Input('date-picker-range', 'end_date')]
 )
-def plots(func, cat, start_date, end_date):
+def plot_rider_analysis(func, cat, start_date, end_date):
     p = plot_rider_trend(rider_trend_df, func, cat, start_date, end_date)
     return p
+
+@app.callback(
+    Output('heat', 'srcDoc'),
+    [Input('station-select', 'value'),
+    Input('heatmap-radio', 'value'),
+    Input('date-picker-range', 'start_date'),
+     Input('date-picker-range', 'end_date')]
+)
+
+def plot_station_analysis(stations, heat_type, start_date, end_date):
+    p = plot_heatmap(heat_map_df, stations, heat_type, start_date, end_date)
+    return p
     
-
-
-
-
 if __name__ == '__main__':
     app.run_server(debug=True)
 
