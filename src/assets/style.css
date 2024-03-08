@@ -1,0 +1,89 @@
+:root {
+    --bs-primary: #2B2D42; /* Replace with your desired color value */
+    --bs-success: #2B2D42;
+    --bs-success-border-subtle: #2B2D42;
+    --bs-primary-border-subtle: #2B2D42;
+    --bs-link-color: #2B2D42;
+    --bs-link-hover-color: #2B2D42;
+    --bs-form-valid-color: #2B2D42;
+    --bs-form-valid-border-color: #2B2D42;
+    --bs-primary-bg-subtle: #2B2D42;
+    --bs-success-bg-subtle: #2B2D42;
+    --bs-info-bg-subtle: #2B2D42;
+    --bs-table-hover-bg: #c7c4c8;
+}
+
+.VirtualizedSelectOption:hover {
+    background-color: #eaeaec !important; /* Change #f0f0f0 to whatever color you prefer */
+    color: #8e0050 !important;
+}
+
+.Select-option.is-focused {
+    background-color: #eaeaec !important; /* Change #f0f0f0 to whatever color you prefer */
+    color: #8e0050 !important;
+}
+
+.Select.is-clearable.is-searchable.Select--multi .Select-menu-outer {
+  background-color: #2B2D42 !important; /* Change this hex color to your desired background color */
+  color: #eaeaec !important;
+}
+
+.Select.has-value.is-clearable.is-searchable.Select--single .Select-menu-outer {
+  background-color: #2B2D42 !important; /* Change this hex color to your desired background color */
+  color: #eaeaec !important;
+}
+
+.Select--single .Select-value {
+    background-color: #eaeaec;
+    border: 1px solid rgba(234, 234, 236, 1);
+    color: #8e0050;
+}
+.Select-value-label {
+  color: #8e0050 !important; /* Change this hex color to your desired text color */
+}
+
+.Select--multi .Select-value-icon {
+    border-right: 0.5px solid rgba(142, 0, 80, 1);
+}
+.Select--multi .Select-value-icon:hover {
+    background-color: #f4e6ee; /* Example background color on hover */
+    color: #8e0050; /* Example text color on hover */
+}
+
+.Select--multi .Select-value {
+    background-color: #eaeaec;
+    border: 1px solid rgba(234, 234, 236, 1);
+    color: #8e0050;
+}
+
+.form-check-input {
+    background-color: #ffffff; /* Default background color */
+    border-color: #2B2D42; /* Default border color */
+    box-shadow: none !important;
+}
+
+.form-check-input:checked {
+    background-color: #2B2D42 !important; /* Checked background color */
+    border-color: #2B2D42 !important; /* Checked border color */
+    box-shadow: none !important;
+}
+
+.form-check-input:hover {
+    background-color: #2B2D42 !important; /* Hover background color */
+    border-color: #2B2D42 !important; /* Hover border color */
+    box-shadow: none !important;
+}
+
+.tab--selected.jsx-2137964197 {
+    border-top: none !important;
+}
+
+.is-focused:not(.is-open)>.Select-control {
+    border-color: #8e0050;
+    box-shadow: 0 0 1px 2px rgba(244, 230, 238, 1)
+}
+
+#station-select .Select.has-value.is-clearable.is-searchable.Select--multi {
+    margin-right: 10px;
+    margin-left: 2px;
+}
