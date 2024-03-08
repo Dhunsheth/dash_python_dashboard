@@ -19,7 +19,7 @@ The Bike Sharing Dashboard serves as a valuable tool for the Bike Sharing Organi
 ### Challenges
 The biggest challenge faced with the project was dealing with 1 year's worth of data (more than 3 million rows). Some techniques used to reduce the memory load included pre-calculating metrics for plotting, multi-indexing, and storing data as parquet files for efficient storage. In addition, with Heroku deployment, storing files on GitHub in LFS format, and reading them directly helped speed up app deployment. However, ultimately, due to the sheer size, rather than using 1 years worth of data, a reduced amount of 4 months had to be used to stay under the Heroku 512mb memory limit to prevent the app from crashing.
 
-In the future, either better resources can be used on Heroku to increase the memory limit, or a cloud data warehouse to store the data from which the necessary rows/columns can be retrieved as needed.     
+As a permanent solution, the date selector was retired, and as a result, the entire data set could be used. We concluded that having access to the full amount of data was more important than having a "cool" date selector feature. In addition, the UI, graphics, and layout of the app were all changed in the imporved version - based on the peer review feedback and our own thoughts. Most importantly, a KPI Summary bar was added on the left to help highlight some of the key information from the plots on the right.
       
 
 ### Improved Dash App    
