@@ -98,7 +98,7 @@ def get_first_section():
                                 dcc.RadioItems(
                                     id='rider-trend-radio',
                                     options=[
-                                        {'label': "Number of Rides", 'value': 'count'},
+                                        {'label': "Number of Rides Started", 'value': 'count'},
                                         {'label': "Average Duration", 'value': 'mean'}
                                     ],
                                     value='count',
