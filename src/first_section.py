@@ -147,6 +147,20 @@ alt.data_transformers.enable('vegafusion')
 # classic, docked, electric
 color = ['#2B2D42', '#626797', '#5D2E46']
 def plot_rider_trend_hour(df, func, cat):
+    """
+    This function creates the hourly rider trend graph and hourly KPI's. 
+    
+    Args:
+        df: data frame for hourly data
+        func (str): Value of radio filter to select either "count" or "mean".
+        cat (str): Value from check-boxes to select bike type to plot. 
+    
+    Returns:
+        chart_obj: chart object
+        top_hour: hour with the highest count or mean
+        total_rides_hour: total number of rides on hourly graph
+        total_avg_hour: average number of rides on hourly graph
+    """
     
     filtered_df = df.loc[(slice(None), cat), :]
     hour = filtered_df.groupby(['hour']).agg({'count':'sum','ride_duration':'mean'}) 
@@ -216,7 +230,21 @@ def plot_rider_trend_hour(df, func, cat):
     return [chart_obj, top_hour, total_rides_hour, total_avg_hour]
 
 def plot_rider_trend_day(df, func, cat):
+    """
+    This function creates the daily rider trend graph and KPI's. 
     
+    Args:
+        df: data frame for daily data
+        func (str): Value of radio filter to select either "count" or "mean".
+        cat (str): Value from check-boxes to select bike type to plot. 
+    
+    Returns:
+        chart_obj: chart object
+        top_day: day with the highest count or mean
+        total_rides_day: total number of rides on daily graph
+        total_avg_day: average number of rides on daily graph
+    """
+
     filtered_df = df.loc[(slice(None), cat), :]
     day = filtered_df.groupby(['day']).agg({'count':'sum','ride_duration':'mean'}) 
     filtered_df = filtered_df.reset_index()
@@ -287,6 +315,20 @@ def plot_rider_trend_day(df, func, cat):
     return [chart_obj, top_day, total_rides_day, total_avg_day]
 
 def plot_rider_trend_month(df, func, cat):
+    """
+    This function creates the monthly rider trend graph and KPI's. 
+    
+    Args:
+        df: data frame for monthly data
+        func (str): Value of radio filter to select either "count" or "mean".
+        cat (str): Value from check-boxes to select bike type to plot. 
+    
+    Returns:
+        chart_obj: chart object
+        top_month: month with the highest count or mean
+        total_rides_month: total number of rides on monthly graph
+        total_avg_month: average number of rides on monthly graph
+    """
     
     filtered_df = df.loc[(slice(None), cat), :]
     month = filtered_df.groupby(['month']).agg({'count':'sum','ride_duration':'mean'}) 

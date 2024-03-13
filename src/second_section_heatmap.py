@@ -174,6 +174,20 @@ def get_second_section(df):
 alt.data_transformers.enable('vegafusion')
 
 def plot_station(df, func, station):
+    """
+    This function creates the single station heatmap. 
+    
+    Args:
+        df: data frame for station data
+        func (str): Value from radio filter to select comparison metric.
+        station (str): Station name to plot the heatmap for.
+    
+    Returns:
+        chart_obj: chart object
+        mp_day: day where the highest comparison metric occured
+        mp_hour: hour where the highest comparison metric occured
+        mp_metric: value of the highest comparison metric
+    """
     filtered_df = df.loc[(slice(None), slice(None), station), :]
     filtered_df = filtered_df.reset_index()
     
@@ -269,7 +283,20 @@ def plot_station(df, func, station):
     return [chart_obj, mp_day, mp_hour, "{:,}".format(mp_metric)]
 
 def plot_multi_station(df, func, stations):
+    """
+    This function creates the multi-station heatmap. 
     
+    Args:
+        df: data frame for station data
+        func (str): Value from radio filter to select comparison metric.
+        station (str): array of station names selected to compare
+    
+    Returns:
+        chart_obj: chart object
+        mp_station: station for which the highest comparison metric occured
+        mp_time: hour where the highest comparison metric occured
+        mp_metric: value of the highest comparison metric
+    """ 
     filtered_df = df.loc[(slice(None), slice(None), stations), :]
     filtered_df = filtered_df.reset_index()
     filtered_df.drop(columns=['day'], inplace=True)

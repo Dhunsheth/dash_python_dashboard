@@ -5,8 +5,6 @@ import shutil
 from haversine import haversine, Unit
 import os
 
-
-## Reading all ZIP files and compiling main data frame
 def calculate_distance(row):
     start_coords = (row['start_lat'], row['start_lng'])
     end_coords = (row['end_lat'], row['end_lng'])
@@ -141,7 +139,6 @@ station_comparison['end_count'] = station_comparison['end_count'].astype(int)
 station_comparison['net'] = station_comparison['end_count'] - station_comparison['start_count']
 station_comparison['total'] = station_comparison['end_count'] + station_comparison['start_count']
 station_comparison.to_parquet('../data/processed/station_comparison.parquet')
-# station_comparison.sort_index(inplace=True)
 
 stations = station_comparison.reset_index().groupby(['station_name']).agg({'total':'sum'}).reset_index().sort_values(by='total', ascending=False)
 stations.to_parquet('../data/processed/station_list.parquet')

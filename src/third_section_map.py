@@ -73,6 +73,20 @@ def get_third_section_map():
  ]
 
 def get_map(num_stations, geo_station_map_df):
+    """
+    This function creates the geo map for tab 3.
+    
+    Args:
+        num_stations (int): number of stations to mark
+        geo_station_map_df: data frame of station data
+    
+    Returns:
+        map_html: chart object
+        top_station: # 1 rank station
+        top_metric: total number of rides at the top station
+        bot_station: station at the bottom of the number of stations selected
+        bot_metric: total number of rides that occured at the bottom station
+    """ 
     
     filtered_df = geo_station_map_df.reset_index()
 
