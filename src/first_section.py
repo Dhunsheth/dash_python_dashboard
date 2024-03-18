@@ -165,12 +165,11 @@ def plot_rider_trend_hour(df, func, cat):
     filtered_df = df.loc[(slice(None), cat), :]
     hour = filtered_df.groupby(['hour']).agg({'count':'sum','ride_duration':'mean'}) 
     filtered_df = filtered_df.reset_index()
-    
-    total_rides_hour = "{:,}".format(hour['count'].max())
-    total_avg_hour = round(hour['ride_duration'].max(),2)
 
     if func == "mean":
         top_hour = hour['ride_duration'].argmax()
+        total_rides_hour = "{:,}".format(hour.loc[top_hour,'count'])
+        total_avg_hour = round(hour.loc[top_hour,'ride_duration'],2)
         
         by_hour = alt.Chart(filtered_df).mark_line(point=True).encode(
         x=alt.X('hour:O', title=None, axis=alt.Axis(labelAngle=0)),
@@ -182,12 +181,14 @@ def plot_rider_trend_hour(df, func, cat):
         tooltip=[
             alt.Tooltip('hour:O', title='Time'),
             alt.Tooltip('rideable_type:N', title='Ride Type'),
-            alt.Tooltip('ride_duration:Q', title='Average Ride Duration')
+            alt.Tooltip('ride_duration:Q', title='Average Ride Duration', format='.2f')
         ]
         ).properties(height=480, width=800)
 
     else:
         top_hour = hour['count'].argmax()
+        total_rides_hour = "{:,}".format(hour.loc[top_hour,'count'])
+        total_avg_hour = round(hour.loc[top_hour,'ride_duration'],2)
         
         by_hour = alt.Chart(filtered_df).mark_bar().encode(
             x=alt.X('hour:O', title=None, axis=alt.Axis(labelAngle=0)),
@@ -199,7 +200,7 @@ def plot_rider_trend_hour(df, func, cat):
             tooltip=[
                 alt.Tooltip('hour:O', title='Time'),
                 alt.Tooltip('rideable_type:N', title='Ride Type'),
-                alt.Tooltip('count:Q', title="Number of Rides")
+                alt.Tooltip('count:Q', title="Number of Rides", format=',')
             ]
         ).properties(height=480, width=950)
         
@@ -249,13 +250,12 @@ def plot_rider_trend_day(df, func, cat):
     day = filtered_df.groupby(['day']).agg({'count':'sum','ride_duration':'mean'}) 
     filtered_df = filtered_df.reset_index()
 
-    total_rides_day = "{:,}".format(day['count'].max())
-    total_avg_day = round(day['ride_duration'].max(),2)
-
     days_order = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
     if func == "mean":
         top_day = day.index[day['ride_duration'].argmax()]
+        total_rides_day = "{:,}".format(day.loc[top_day,'count'])
+        total_avg_day = round(day.loc[top_day,'ride_duration'],2)
         
         by_day = alt.Chart(filtered_df).mark_line(point=True).encode(
         x=alt.X('day:O', title=None, axis=alt.Axis(labelAngle=0), sort=days_order),
@@ -267,11 +267,13 @@ def plot_rider_trend_day(df, func, cat):
         tooltip=[
             alt.Tooltip('day:O', title='Day'),
             alt.Tooltip('rideable_type:N', title='Ride Type'),
-            alt.Tooltip('ride_duration:Q', title='Average Ride Duration')
+            alt.Tooltip('ride_duration:Q', title='Average Ride Duration', format='.2f')
         ]
         ).properties(height=480, width=400)
     else:
         top_day = day.index[day['count'].argmax()]
+        total_rides_day = "{:,}".format(day.loc[top_day,'count'])
+        total_avg_day = round(day.loc[top_day,'ride_duration'],2)
         
         by_day = alt.Chart(filtered_df).mark_bar().encode(
             x=alt.X('day:O', title=None, axis=alt.Axis(labelAngle=0), sort=days_order),
@@ -283,7 +285,7 @@ def plot_rider_trend_day(df, func, cat):
             tooltip=[
                 alt.Tooltip('day:O', title='Day'),
                 alt.Tooltip('rideable_type:N', title='Ride Type'),
-                alt.Tooltip('count:Q', title="Number of Rides")
+                alt.Tooltip('count:Q', title="Number of Rides", format=',')
             ]
         ).properties(height=480, width=400)
         
@@ -334,14 +336,14 @@ def plot_rider_trend_month(df, func, cat):
     month = filtered_df.groupby(['month']).agg({'count':'sum','ride_duration':'mean'}) 
     filtered_df = filtered_df.reset_index()
 
-    total_rides_month = "{:,}".format(month['count'].max())
-    total_avg_month = round(month['ride_duration'].max(),2)
-
     month_order = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
     month_abbr_to_full = {month: calendar.month_name[i] for i, month in enumerate(calendar.month_abbr) if month}
 
     if func == "mean":
-        top_month = month_abbr_to_full[month.index[month['ride_duration'].argmax()]]
+        top_month = month.index[month['ride_duration'].argmax()]
+        total_rides_month = "{:,}".format(month.loc[top_month,'count'])
+        total_avg_month = round(month.loc[top_month,'ride_duration'],2)
+        top_month = month_abbr_to_full[top_month]
         
         by_month = alt.Chart(filtered_df).mark_line(point=True).encode(
         x=alt.X('month:O', title=None, axis=alt.Axis(labelAngle=0), sort=month_order),
@@ -353,11 +355,13 @@ def plot_rider_trend_month(df, func, cat):
         tooltip=[
             alt.Tooltip('month:O', title='Month'),
             alt.Tooltip('rideable_type:N', title='Ride Type'),
-            alt.Tooltip('ride_duration:Q', title='Average Ride Duration')
+            alt.Tooltip('ride_duration:Q', title='Average Ride Duration', format='.2f')
         ]
         ).properties(height=480, width=400)
     else:
         top_month = month.index[month['count'].argmax()]
+        total_rides_month = "{:,}".format(month.loc[top_month,'count'])
+        total_avg_month = round(month.loc[top_month,'ride_duration'],2)
         top_month = month_abbr_to_full[top_month]
         
         by_month = alt.Chart(filtered_df).mark_bar().encode(
@@ -370,7 +374,7 @@ def plot_rider_trend_month(df, func, cat):
             tooltip=[
                 alt.Tooltip('month:O', title='Month'),
                 alt.Tooltip('rideable_type:N', title='Ride Type'),
-                alt.Tooltip('count:Q', title="Number of Rides")
+                alt.Tooltip('count:Q', title="Number of Rides", format=',')
             ]
         ).properties(height=480, width=400)
         

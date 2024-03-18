@@ -208,7 +208,7 @@ def plot_station(df, func, station):
                 alt.Tooltip('station_name:N', title='Station'),
                 alt.Tooltip('day:O', title='Day'),
                 alt.Tooltip('hour:O', title='Hour'),
-                alt.Tooltip('sum(start_count)', title='# of Rides Started')
+                alt.Tooltip('sum(start_count)', title='# of Rides Started', format=',')
                 ]
             )
     elif func == 'end':
@@ -223,7 +223,7 @@ def plot_station(df, func, station):
                 alt.Tooltip('station_name:N', title='Station'),
                 alt.Tooltip('day:O', title='Day'),
                 alt.Tooltip('hour:O', title='Hour'),
-                alt.Tooltip('sum(end_count)', title='# of Rides Ended')
+                alt.Tooltip('sum(end_count)', title='# of Rides Ended', format=',')
                 ]
             )
     elif func == 'total':
@@ -238,7 +238,7 @@ def plot_station(df, func, station):
                 alt.Tooltip('station_name:N', title='Station'),
                 alt.Tooltip('day:O', title='Day'),
                 alt.Tooltip('hour:O', title='Hour'),
-                alt.Tooltip('sum(total)', title='# of Total Rides')
+                alt.Tooltip('sum(total)', title='# of Total Rides', format=',')
                 ]
             )
     else:
@@ -253,7 +253,7 @@ def plot_station(df, func, station):
                 alt.Tooltip('station_name:N', title='Station'),
                 alt.Tooltip('day:O', title='Day'),
                 alt.Tooltip('hour:O', title='Hour'),
-                alt.Tooltip('sum(net)', title='# of Net Rides')
+                alt.Tooltip('sum(net)', title='# of Net Rides', format=',')
                 ]
             )
     station_map = station_map.properties(height=400, width = 450).configure_axis(
@@ -316,7 +316,7 @@ def plot_multi_station(df, func, stations):
             tooltip=[
                 alt.Tooltip('station_name:N', title='Station'),
                 alt.Tooltip('hour:O', title='Hour'),
-                alt.Tooltip('start_count', title='# of Rides Started')
+                alt.Tooltip('start_count', title='# of Rides Started', format=',')
                 ]
             )
     elif func == 'end':
@@ -330,7 +330,7 @@ def plot_multi_station(df, func, stations):
             tooltip=[
                 alt.Tooltip('station_name:N', title='Station'),
                 alt.Tooltip('hour:O', title='Hour'),
-                alt.Tooltip('end_count', title='# of Rides Ended')
+                alt.Tooltip('end_count', title='# of Rides Ended', format=',')
                 ]
             )
     elif func == 'total':
@@ -344,7 +344,7 @@ def plot_multi_station(df, func, stations):
             tooltip=[
                 alt.Tooltip('station_name:N', title='Station'),
                 alt.Tooltip('hour:O', title='Hour'),
-                alt.Tooltip('total', title='# of Total Rides')
+                alt.Tooltip('total', title='# of Total Rides', format=',')
                 ]
             )
     else:
@@ -358,7 +358,7 @@ def plot_multi_station(df, func, stations):
             tooltip=[
                 alt.Tooltip('station_name:N', title='Station'),
                 alt.Tooltip('hour:O', title='Hour'),
-                alt.Tooltip('net', title='# of Net Rides')
+                alt.Tooltip('net', title='# of Net Rides', format=',')
                 ]
             )
     multi_station_map = multi_station_map.properties(height=500, width = 900).configure_axis(

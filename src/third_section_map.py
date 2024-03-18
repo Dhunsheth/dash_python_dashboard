@@ -109,7 +109,8 @@ def get_map(num_stations, geo_station_map_df):
     icon_image_b = 'point_b.png'
     
     for point in points[:num_stations]:
-        tooltip_text = f"Rank: {filtered_map_df[filtered_map_df['station_name'] == point[2]].index[0] + 1} - {point[2]} - {point[3]}"  # Rank and station name
+        formatted_rides = f"{point[3]:,}"
+        tooltip_text = f"Rank: {filtered_map_df[filtered_map_df['station_name'] == point[2]].index[0] + 1} - {point[2]} - {formatted_rides}"  # Rank and station name
         
         if point[2] == top_station or point[2] == bot_station:
             icon = folium.features.CustomIcon(icon_image_a, icon_size=(80, 80))
